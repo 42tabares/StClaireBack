@@ -37,5 +37,9 @@ public class Patient {
     )
     private List<Appointment> appointments;
 
+    public Patient addAppointment(Appointment appointment){
+        this.appointments.add(appointment);
+        return this;
+    }
 
 }
