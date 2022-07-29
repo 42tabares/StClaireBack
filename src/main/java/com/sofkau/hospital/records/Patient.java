@@ -1,10 +1,16 @@
 package com.sofkau.hospital.records;
 
 import lombok.Data;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.List;
 
@@ -18,9 +24,18 @@ public class Patient {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long patientID;
 
+    @ManyToOne
+    @JoinColumn(name = "Related Specialty")
+    private Specialty specialty;
+
     private String name;
     private Integer age;
-    private String dates;
-    private Integer appointments_quantity;
+
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    private List<Appointment> appointments;
+
 
 }
