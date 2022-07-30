@@ -9,10 +9,9 @@ import com.sofkau.hospital.respositories.SpecialtyRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+
 
 @Service
 public class SpecialtyServImpl implements SpecialtyServ {
@@ -59,14 +58,16 @@ public class SpecialtyServImpl implements SpecialtyServ {
         //Search if user is already in the Specialty, if not, add it!
         Specialty specialty = specialtiesRepo.findById(patient.getFkSpecialtyID()).get();
         List<Patient> existingPatients = getSpecialtyPatients(specialty.getSpecialtyID());
-        if (existingPatients.contains(patient)){
-            return null;
-        } else {
-            patientsRepo.save(patient);
-            specialty.addPatient(patient);
-            return specialtiesRepo.save(specialty);
+
+        for(Patient comparator: existingPatients) {
+            if (comparator.getName().equals(patient.getName())) {
+                return null;
+            }
         }
 
+        patientsRepo.save(patient);
+        specialty.addPatient(patient);
+        return specialtiesRepo.save(specialty);
     }
 
     @Override
