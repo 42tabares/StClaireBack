@@ -45,7 +45,6 @@ public class SpecialtyServImpl implements SpecialtyServ {
                 deletePatient(patient.getPatientID());
             }
         }
-
         specialtiesRepo.deleteById(specialtyID);
 
     }
@@ -64,7 +63,6 @@ public class SpecialtyServImpl implements SpecialtyServ {
                 return null;
             }
         }
-
         patientsRepo.save(patient);
         specialty.addPatient(patient);
         return specialtiesRepo.save(specialty);
@@ -81,7 +79,6 @@ public class SpecialtyServImpl implements SpecialtyServ {
             }
         }
         return  patientsInSpecialty;
-
     }
 
     @Override
@@ -91,18 +88,16 @@ public class SpecialtyServImpl implements SpecialtyServ {
         List<Appointment> appointmentsToDelete = getPatientAppointments(patientID);
         if (!appointmentsToDelete.isEmpty()) {
             for (Appointment appointment : appointmentsToDelete) {
-                deleteAppointment(appointment.getAppointment_ID());
+                deleteAppointment(appointment.getAppointmentID());
             }
         }
-
         patientsRepo.deleteById(patientID);
-
     }
 
 
 
     @Override
-    public Patient addAppointment(Appointment appointment) {
+    public Patient createAppointment(Appointment appointment) {
         Patient patient = patientsRepo.findById(appointment.getFkPatientID()).get();
         patient.setNumberOfAppointments(patient.getNumberOfAppointments() + 1);
         patient.addAppointment(appointment);
@@ -112,7 +107,14 @@ public class SpecialtyServImpl implements SpecialtyServ {
 
     @Override
     public List<Appointment> getPatientAppointments(Long patientID) {
-        return appointmentsRepo.findAll();
+        List<Appointment> allAppointments = appointmentsRepo.findAll();
+        List<Appointment> patientAppointments = new ArrayList<>();
+        for(Appointment appointment : allAppointments){
+            if (appointment.getFkPatientID().equals(patientID)){
+                patientAppointments.add(appointment);
+            }
+        }
+        return patientAppointments;
     }
 
     @Override

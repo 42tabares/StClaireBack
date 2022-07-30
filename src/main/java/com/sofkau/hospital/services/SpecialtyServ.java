@@ -16,7 +16,7 @@ public interface SpecialtyServ {
     List<Patient> getSpecialtyPatients(Long specialtyID);
     void deletePatient(Long patientID);
 
-    Patient addAppointment(Appointment appointment);
+    Patient createAppointment(Appointment appointment);
     List<Appointment> getPatientAppointments(Long patientID);
     void deleteAppointment(Long appointmentID);
 

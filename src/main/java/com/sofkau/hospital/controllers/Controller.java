@@ -48,7 +48,7 @@ public class Controller {
 
     @PostMapping("create/appointment")
     public Patient createAppointment(@RequestBody Appointment appointment){
-        return service.addAppointment(appointment);
+        return service.createAppointment(appointment);
     }
 
     @DeleteMapping("delete/specialty/{id}")
