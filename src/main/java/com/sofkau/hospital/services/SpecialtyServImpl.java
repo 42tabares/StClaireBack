@@ -104,6 +104,7 @@ public class SpecialtyServImpl implements SpecialtyServ {
     @Override
     public Patient addAppointment(Appointment appointment) {
         Patient patient = patientsRepo.findById(appointment.getFkPatientID()).get();
+        patient.setNumberOfAppointments(patient.getNumberOfAppointments() + 1);
         patient.addAppointment(appointment);
         appointmentsRepo.save(appointment);
         return patientsRepo.save(patient);
@@ -116,6 +117,9 @@ public class SpecialtyServImpl implements SpecialtyServ {
 
     @Override
     public void deleteAppointment(Long appointmentID) {
+        Appointment appointment = appointmentsRepo.findById(appointmentID).get();
+        Patient patient = patientsRepo.findById(appointment.getFkPatientID()).get();
+        patient.setNumberOfAppointments(patient.getNumberOfAppointments() - 1);
         appointmentsRepo.deleteById(appointmentID);
     }
 }

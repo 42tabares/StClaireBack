@@ -26,6 +26,7 @@ public class Patient {
     private Long fkSpecialtyID;
     private String name;
     private Integer age;
+    private Integer numberOfAppointments = 0;
 
     @OneToMany(
             cascade = CascadeType.ALL,
