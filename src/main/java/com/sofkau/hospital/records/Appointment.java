@@ -18,8 +18,7 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long appointment_ID;
 
-    @ManyToOne
-    Patient patient;
+    private Long fkPatientID;
 
     String date;
 

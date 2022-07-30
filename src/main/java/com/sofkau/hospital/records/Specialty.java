@@ -22,7 +22,7 @@ public class Specialty {
     private Long specialtyID;
 
     private String name;
-    private String physician_in_charge;
+    private String physician;
 
     @OneToMany(
             cascade = CascadeType.ALL,

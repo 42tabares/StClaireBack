@@ -8,6 +8,7 @@ import com.sofkau.hospital.respositories.PatientRepo;
 import com.sofkau.hospital.respositories.SpecialtyRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,17 +37,17 @@ public class SpecialtyServImpl implements SpecialtyServ {
     }
 
     @Override
-    public void deleteSpecialty(Specialty specialty) {
+    public void deleteSpecialty(Long specialtyID) {
 
         //Get all patients in the Specialty and delete them
-        List<Patient> patientsToDelete = getSpecialtyPatients(specialty);
+        List<Patient> patientsToDelete = getSpecialtyPatients(specialtyID);
         if (!patientsToDelete.isEmpty()) {
             for (Patient patient : patientsToDelete) {
-                deletePatient(patient);
+                deletePatient(patient.getPatientID());
             }
         }
 
-        specialtiesRepo.deleteById(specialty.getSpecialtyID());
+        specialtiesRepo.deleteById(specialtyID);
 
     }
 
@@ -56,8 +57,8 @@ public class SpecialtyServImpl implements SpecialtyServ {
     public Specialty createPatient(Patient patient) {
 
         //Search if user is already in the Specialty, if not, add it!
-        Specialty specialty = patient.getSpecialty();
-        List<Patient> existingPatients = getSpecialtyPatients(specialty);
+        Specialty specialty = specialtiesRepo.findById(patient.getFkSpecialtyID()).get();
+        List<Patient> existingPatients = getSpecialtyPatients(specialty.getSpecialtyID());
         if (existingPatients.contains(patient)){
             return null;
         } else {
@@ -69,31 +70,31 @@ public class SpecialtyServImpl implements SpecialtyServ {
     }
 
     @Override
-    public List<Patient> getSpecialtyPatients(Specialty specialty) {
+    public List<Patient> getSpecialtyPatients(@RequestBody Long specialtyID) {
 
         List<Patient> allPatients = patientsRepo.findAll();
-        List<Patient> patientsInAppointment = new ArrayList<>();
+        List<Patient> patientsInSpecialty = new ArrayList<>();
         for (Patient patient: allPatients) {
-            if (patient.getSpecialty().getSpecialtyID().equals(specialty.getSpecialtyID())){
-                patientsInAppointment.add(patient);
+            if (patient.getFkSpecialtyID().equals(specialtyID)){
+                patientsInSpecialty.add(patient);
             }
         }
-        return  patientsInAppointment;
+        return  patientsInSpecialty;
 
     }
 
     @Override
-    public void deletePatient(Patient patient) {
+    public void deletePatient(Long patientID) {
 
         //Get all appointments of the patient and delete them
-        List<Appointment> appointmentsToDelete = getPatientAppointments(patient);
+        List<Appointment> appointmentsToDelete = getPatientAppointments(patientID);
         if (!appointmentsToDelete.isEmpty()) {
             for (Appointment appointment : appointmentsToDelete) {
-                deleteAppointment(appointment);
+                deleteAppointment(appointment.getAppointment_ID());
             }
         }
 
-        patientsRepo.deleteById(patient.getPatientID());
+        patientsRepo.deleteById(patientID);
 
     }
 
@@ -101,19 +102,19 @@ public class SpecialtyServImpl implements SpecialtyServ {
 
     @Override
     public Patient addAppointment(Appointment appointment) {
-        Patient patient = appointment.getPatient();
+        Patient patient = patientsRepo.findById(appointment.getFkPatientID()).get();
         patient.addAppointment(appointment);
         appointmentsRepo.save(appointment);
         return patientsRepo.save(patient);
     }
 
     @Override
-    public List<Appointment> getPatientAppointments(Patient patient) {
+    public List<Appointment> getPatientAppointments(Long patientID) {
         return appointmentsRepo.findAll();
     }
 
     @Override
-    public void deleteAppointment(Appointment appointment) {
-        appointmentsRepo.deleteById(appointment.getAppointment_ID());
+    public void deleteAppointment(Long appointmentID) {
+        appointmentsRepo.deleteById(appointmentID);
     }
 }

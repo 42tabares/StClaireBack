@@ -23,11 +23,7 @@ public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long patientID;
-
-    @ManyToOne
-    @JoinColumn(name = "Related Specialty")
-    private Specialty specialty;
-
+    private Long fkSpecialtyID;
     private String name;
     private Integer age;
 

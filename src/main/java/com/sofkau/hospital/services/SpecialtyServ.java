@@ -9,15 +9,15 @@ public interface SpecialtyServ {
 
     Specialty createSpecialty(Specialty specialty);
     List<Specialty> getAllSpecialties();
-    void deleteSpecialty(Specialty specialty);
+    void deleteSpecialty(Long specialtyID);
 
 
     Specialty createPatient(Patient patient);
-    List<Patient> getSpecialtyPatients(Specialty specialty);
-    void deletePatient(Patient patient);
+    List<Patient> getSpecialtyPatients(Long specialtyID);
+    void deletePatient(Long patientID);
 
     Patient addAppointment(Appointment appointment);
-    List<Appointment> getPatientAppointments(Patient patient);
-    void deleteAppointment(Appointment appointment);
+    List<Appointment> getPatientAppointments(Long patientID);
+    void deleteAppointment(Long appointmentID);
 
 }
