@@ -1,5 +1,6 @@
 package com.sofkau.hospital.services;
 
+import com.sofkau.hospital.DTO.SpecialtyDTO;
 import com.sofkau.hospital.records.Appointment;
 import com.sofkau.hospital.records.Patient;
 import com.sofkau.hospital.records.Specialty;
@@ -31,8 +32,15 @@ public class SpecialtyServImpl implements SpecialtyServ {
     }
 
     @Override
-    public List<Specialty> getAllSpecialties() {
-        return specialtiesRepo.findAll();
+    public List<SpecialtyDTO> getAllSpecialties() {
+        List<SpecialtyDTO> DTOList = new ArrayList<>();
+        List<Specialty> specialties = specialtiesRepo.findAll();
+
+        for (Specialty specialty:specialties) {
+            DTOList.add(specialty.toDTO());
+        }
+
+        return DTOList;
     }
 
     @Override

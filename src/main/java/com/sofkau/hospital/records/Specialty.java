@@ -1,6 +1,7 @@
 package com.sofkau.hospital.records;
 
 
+import com.sofkau.hospital.DTO.SpecialtyDTO;
 import lombok.Data;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -33,6 +34,10 @@ public class Specialty {
     public Specialty addPatient(Patient patient){
         this.patients.add(patient);
         return this;
+    }
+
+    public SpecialtyDTO toDTO(){
+        return new SpecialtyDTO(this.specialtyID,this.name,this.physician,this.patients);
     }
 
 }

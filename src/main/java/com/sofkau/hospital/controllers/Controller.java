@@ -1,5 +1,6 @@
 package com.sofkau.hospital.controllers;
 
+import com.sofkau.hospital.DTO.SpecialtyDTO;
 import com.sofkau.hospital.records.Appointment;
 import com.sofkau.hospital.records.Patient;
 import com.sofkau.hospital.records.Specialty;
@@ -25,7 +26,7 @@ public class Controller {
     private SpecialtyServ service;
 
     @GetMapping("get/specialties")
-    public List<Specialty> getAllSpecialties(){
+    public List<SpecialtyDTO> getAllSpecialties(){
         return service.getAllSpecialties();
     }
 
