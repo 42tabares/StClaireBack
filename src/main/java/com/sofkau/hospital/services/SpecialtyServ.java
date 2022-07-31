@@ -10,7 +10,7 @@ public interface SpecialtyServ {
     Specialty createSpecialty(Specialty specialty);
     List<Specialty> getAllSpecialties();
     void deleteSpecialty(Long specialtyID);
-
+    Specialty updateSpecialtyFields(Specialty specialty);
 
     Specialty createPatient(Patient patient);
     List<Patient> getSpecialtyPatients(Long specialtyID);

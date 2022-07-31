@@ -49,7 +49,15 @@ public class SpecialtyServImpl implements SpecialtyServ {
 
     }
 
+    @Override
+    public Specialty updateSpecialtyFields(Specialty specialty) {
+        Specialty specialtyToModify = specialtiesRepo.findById(specialty.getSpecialtyID()).get();
 
+        specialtyToModify.setName(specialty.getName());
+        specialtyToModify.setPhysician(specialty.getPhysician());
+
+        return specialtiesRepo.save(specialtyToModify);
+    }
 
     @Override
     public Specialty createPatient(Patient patient) {
