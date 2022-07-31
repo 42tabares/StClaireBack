@@ -69,7 +69,7 @@ public class SpecialtyServImpl implements SpecialtyServ {
     }
 
     @Override
-    public List<Patient> getSpecialtyPatients(@RequestBody Long specialtyID) {
+    public List<Patient> getSpecialtyPatients(Long specialtyID) {
 
         List<Patient> allPatients = patientsRepo.findAll();
         List<Patient> patientsInSpecialty = new ArrayList<>();

@@ -5,6 +5,7 @@ import com.sofkau.hospital.records.Patient;
 import com.sofkau.hospital.records.Specialty;
 import com.sofkau.hospital.services.SpecialtyServ;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/")
+@CrossOrigin
 public class Controller {
 
     @Autowired
